@@ -104,5 +104,77 @@
     "You can't use up creativity. The more you use, the more you have. - Maya Angelou",
     "Imagination is more important than knowledge. - Albert Einstein",
     "Creativity is seeing what others see and thinking what no one else ever thought. - Albert Einstein"
+  ],
+  "love": [
+    "Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope. - Maya Angelou",
+    "The best thing to hold onto in life is each other. - Audrey Hepburn",
+    "Love is composed of a single soul inhabiting two bodies. - Aristotle",
+    "We are most alive when we're in love. - John Updike",
+    "Love does not consist in gazing at each other, but in looking outward together in the same direction. - Antoine de Saint-Exupéry",
+    "To love and be loved is to feel the sun from both sides. - David Viscott"
+  ],
+  "romance": [
+    "I would rather spend one lifetime with you, than face all the ages of this world alone. - J.R.R. Tolkien",
+    "You know you're in love when you can't fall asleep because reality is finally better than your dreams. - Dr. Seuss",
+    "The best love is the kind that awakens the soul; that makes us reach for more. - Nicholas Sparks",
+    "Love is not only something you feel, it is something you do. - David Wilkerson",
+    "Romance is the glamour which turns the dust of everyday life into a golden haze. - Elinor Glyn",
+    "Every heart sings a song, incomplete, until another heart whispers back. - Plato"
+  ],
+  "health": [
+    "To keep the body in good health is a duty... otherwise we shall not be able to keep our mind strong and clear. - Buddha",
+    "The greatest wealth is health. - Virgil",
+    "Take care of your body. It's the only place you have to live. - Jim Rohn",
+    "Good health and good sense are two of life's greatest blessings. - Publilius Syrus",
+    "A healthy outside starts from the inside. - Robert Urich",
+    "The groundwork for all happiness is good health. - Leigh Hunt"
+  ],
+  "parents": [
+    "The most important thing a father can do for his children is to love their mother. - Theodore Hesburgh",
+    "A mother's love for her child is like nothing else in the world. - Agatha Christie",
+    "Parents can only give good advice or put them on the right paths, but the final forming of a person's character lies in their own hands. - Anne Frank",
+    "To the world you are a mother, but to your family you are the world. - Unknown",
+    "The love of a parent is the heartbeat of a family. - Unknown",
+    "Children learn more from what you are than what you teach. - W.E.B. Du Bois"
+  ],
+  "education": [
+    "Education is the most powerful weapon which you can use to change the world. - Nelson Mandela",
+    "The function of education is to teach one to think intensively and to think critically. - Martin Luther King Jr.",
+    "An investment in knowledge pays the best interest. - Benjamin Franklin",
+    "Education is not preparation for life; education is life itself. - John Dewey",
+    "The beautiful thing about learning is that no one can take it away from you. - B.B. King",
+    "Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi"
+  ],
+  "adulthood": [
+    "Adulthood is not about age, it is about responsibility. - Unknown",
+    "The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. - Marcel Proust",
+    "Growing old is mandatory; growing up is optional. - Chili Davis",
+    "Adulthood is a daily struggle to find the balance between doing what you want and doing what you should. - Unknown",
+    "The transition to adulthood is a process of letting go of what was and embracing what will be. - Unknown",
+    "Maturity is when you realize that your own pleasure is not the highest good. - Unknown"
+  ],
+  "heartbreak": [
+    "The emotion that can break your heart is sometimes the very one that heals it. - Nicholas Sparks",
+    "Sometimes, the person you want most is the person you're best without. - Unknown",
+    "Heartbreak is a blessing from God. It is just His way of letting you realize He saved you from the wrong one. - Unknown",
+    "The hardest thing is not talking to someone you used to talk to every day. - Unknown",
+    "Pain makes you stronger, tears make you braver, and heartbreak makes you wiser. - Unknown",
+    "To be rejected by someone doesn't mean you should also reject yourself. - Jocelyn Soriano"
+  ],
+  "death": [
+    "The life of the dead is placed in the memory of the living. - Marcus Tullius Cicero",
+    "Death is not the greatest loss in life. The greatest loss is what dies inside us while we live. - Norman Cousins",
+    "To live in hearts we leave behind is not to die. - Thomas Campbell",
+    "The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time. - Mark Twain",
+    "Death ends a life, not a relationship. - Mitch Albom",
+    "What we have once enjoyed we can never lose. All that we love deeply becomes a part of us. - Helen Keller"
+  ],
+  "poverty": [
+    "Poverty is the parent of revolution and crime. - Aristotle",
+    "The test of our progress is not whether we add more to the abundance of those who have much; it is whether we provide enough for those who have too little. - Franklin D. Roosevelt",
+    "Poverty is not an accident. Like slavery and apartheid, it is man-made and can be removed by the actions of human beings. - Nelson Mandela",
+    "The poor are not those who have little, but those who need much. - Unknown",
+    "In a country well governed, poverty is something to be ashamed of. In a country badly governed, wealth is something to be ashamed of. - Confucius",
+    "Overcoming poverty is not a gesture of charity. It is an act of justice. - Nelson Mandela"
   ]
 }

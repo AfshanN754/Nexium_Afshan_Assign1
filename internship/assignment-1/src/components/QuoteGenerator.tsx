@@ -57,27 +57,35 @@ export default function QuoteGenerator() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-white-900">Quote Generator</h1>
-        <p className="text-lg text-gray-600">
-          Enter a topic and get 3 inspiring motivational quotes
-        </p>
-        <div className="flex flex-wrap justify-center gap-2 mt-4">
-          {Object.keys(quotesData).map((topic) => (
-            <Badge key={topic} variant="secondary" className="cursor-pointer hover:bg-gray-200" 
-                   onClick={() => form.setValue('topic', topic)}>
-              {topic}
-            </Badge>
-          ))}
-        </div>
+    <div className="text-left space-y-4 w-2/3 ml-8">
+      <h1 className="text-4xl font-bold text-black-400">Quote Generator</h1>
+      <div className="max-w-4xl mx-auto p-6 space-y-8 ml-2">
+        <div className="flex justify-between">
+          <div className="w-1/3">
+            <div className="bg-purple-200 p-4 rounded shadow" style={{ maxHeight: '600px', overflowY: 'auto' }}>
+              <div className="flex flex-col gap-5 mt-4">
+                {Object.keys(quotesData).map((topic) => (
+                  <Badge key={topic} variant="secondary" className="cursor-pointer hover:bg-gray-500 text-lg" 
+                         onClick={() => form.setValue('topic', topic)}>
+                    {topic}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+<h1 className="text-xl text-gray-800 font-bold ml-12 mx-auto">
+    Feeling Thoughtful?
+  </h1>
+  <div className="max-w-4xl mx-auto p-6 space-y-8 ml-2">
+    <div className="flex justify-between">
+      <div className="w-1/3">
+        {/* You can add another container here if needed, matching the topics styling */}
       </div>
-
-      <Card className="w-full max-w-md mx-auto">
+      <Card className="w-full max-w-md mx-auto p-4 rounded shadow" style={{ maxHeight: 'fit-content', overflowY: 'auto' }}>
         <CardHeader>
           <CardTitle>Generate Quotes</CardTitle>
           <CardDescription>
-            Try topics like: motivation, success, dreams, leadership, confidence, happiness, wisdom, change, failure, growth, creativity, perseverance
+            What's on your mind...
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -112,34 +120,39 @@ export default function QuoteGenerator() {
         </CardContent>
       </Card>
 
-      {quotes.length > 0 && (
-        <div className="space-y-4">
-          <Alert>
-            <AlertDescription>
-              Found {quotes.length} motivational quotes for your topic! Click on any topic badge above to try different categories.
-            </AlertDescription>
-          </Alert>
-          <h2 className="text-2xl font-semibold text-center text-gray-800">
-            Your Motivational Quotes
-          </h2>
-          <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1">
-            {quotes.map((quote, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <blockquote className="text-lg italic text-gray-700 leading-relaxed">
-                    "{quote.split(' - ')[0]}"
-                  </blockquote>
-                  {quote.includes(' - ') && (
-                    <cite className="block mt-4 text-sm font-medium text-gray-500">
-                      — {quote.split(' - ')[1]}
-                    </cite>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+        {quotes.length > 0 && (
+          <div className="space-y-4">
+            <Alert>
+              <AlertDescription>
+                Found {quotes.length} motivational quotes for your topic! Click on any topic badge above to try different categories.
+              </AlertDescription>
+            </Alert>
+            <h2 className="text-2xl font-semibold text-center text-gray-800">
+              Your Motivational Quotes
+            </h2>
+            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1">
+              {quotes.map((quote, index) => (
+                <Card key={index} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <blockquote className="text-lg italic text-gray-700 leading-relaxed">
+                      "{quote.split(' - ')[0]}"
+                    </blockquote>
+                    {quote.includes(' - ') && (
+                      <cite className="block mt-4 text-sm font-medium text-gray-500">
+                        — {quote.split(' - ')[1]}
+                      </cite>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+      </div>
+</div>
+     
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  )
-}
+      </div>
+      </div>
+      </div>
+  )}
+      //</div>
