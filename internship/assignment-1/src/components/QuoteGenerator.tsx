@@ -1,85 +1,84 @@
-"use client" // Enable client-side rendering for interactivity
+"use client"
 
-import { useState } from "react" // State management for dynamic UI
-import { useForm } from "react-hook-form" // Form handling library
-import { zodResolver } from "@hookform/resolvers/zod" // Validation with Zod
-import * as z from "zod" // Schema validation
-import { Button } from "@/components/ui/button" // UI button component
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card" // Card components
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form" // Form components
-import { Input } from "@/components/ui/input" // Input field component
-import { Badge } from "@/components/ui/badge" // Badge component
-import { Alert, AlertDescription } from "@/components/ui/alert" // Alert component
-import quotesData from "@/data/quotes.json" // Import quote data
-import Head from "next/head" // Metadata and styles (optional, consider moving to globals.css)
-import { Toaster, toast } from "react-hot-toast" // Toast notification library
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import quotesData from "@/data/quotes.json"
+import Head from "next/head"
+import { Toaster, toast } from "react-hot-toast"
 
-const formSchema = z.object({ // Define validation schema for form
+const formSchema = z.object({
   topic: z.string().min(1, "Please enter a topic"),
 })
 
-type Quote = string // Type definition for quotes
+type Quote = string
 
 export default function QuoteGenerator() {
-  const [quotes, setQuotes] = useState<Quote[]>([]) // State to store generated quotes
-  const [isLoading, setIsLoading] = useState(false) // Loading state for submission
-  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0) // Current quote index
-  const [selectedTopic, setSelectedTopic] = useState<string>("") // Selected topic state
+  const [quotes, setQuotes] = useState<Quote[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0)
+  const [selectedTopic, setSelectedTopic] = useState<string>("")
 
-  const form = useForm<z.infer<typeof formSchema>>({ // Initialize form with validation
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { topic: "" },
+    defaultValues: {
+      topic: "",
+    },
   })
 
-  const getRandomQuotes = (topicQuotes: Quote[]): Quote[] => { // Function to shuffle quotes randomly
+  const getRandomQuotes = (topicQuotes: Quote[]): Quote[] => {
     const shuffled = [...topicQuotes].sort(() => 0.5 - Math.random())
     return shuffled
   }
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => { // Handle form submission
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
-    await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API delay
+    
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
     const topic = values.topic.toLowerCase()
     let selectedQuotes: Quote[] = []
 
-    try {
-      if (topic in quotesData) {
-        selectedQuotes = getRandomQuotes(quotesData[topic as keyof typeof quotesData])
-      } else {
-        const allQuotes = Object.values(quotesData).flat()
-        selectedQuotes = getRandomQuotes(allQuotes)
-      }
-      setQuotes(selectedQuotes)
-      setCurrentQuoteIndex(0)
-      setSelectedTopic(topic)
-      toast.success(`Generated ${selectedQuotes.length} quotes for "${topic}"!`, { duration: 3000 })
-    } catch (error) {
-      toast.error("Failed to generate quotes. Please try again.", { duration: 3000 })
-    } finally {
-      setIsLoading(false)
+    if (topic in quotesData) {
+      selectedQuotes = getRandomQuotes(quotesData[topic as keyof typeof quotesData])
+    } else {
+      const allQuotes = Object.values(quotesData).flat()
+      selectedQuotes = getRandomQuotes(allQuotes)
     }
+
+    setQuotes(selectedQuotes)
+    setCurrentQuoteIndex(0)
+    setSelectedTopic(topic)
+    setIsLoading(false)
   }
 
-  const copyToClipboard = (text: string) => { // Copy quote to clipboard
+  const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      toast.success("Copied to clipboard!", { duration: 2000 })
+      toast.success("Copied to clipboard!")
     }).catch(() => {
-      toast.error("Failed to copy. Please try again.", { duration: 2000 })
+      toast.error("Failed to copy")
     })
   }
 
-  const handleNextQuote = () => { // Move to next quote in the list
+  const handleNextQuote = () => {
     if (quotes.length > 1) {
       setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length)
     }
   }
 
-  const handleTopicClick = (topic: string) => { // Handle click on topic badge
+  const handleTopicClick = (topic: string) => {
     form.setValue('topic', topic)
     setSelectedTopic(topic)
   }
 
-  const getTopicBadgeStyle = (topic: string) => { // Dynamic styling for topic badges
+  const getTopicBadgeStyle = (topic: string) => {
     const isSelected = selectedTopic === topic.toLowerCase()
     const colors = {
       'motivation': isSelected ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-amber-600/70 hover:to-orange-600/70 border-amber-500/40',
@@ -110,59 +109,59 @@ export default function QuoteGenerator() {
 
   return (
     <>
-      <Head> // Metadata and font import (consider moving to globals.css)
+      <Head>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
       </Head>
       
-      <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900"> // Container with static gradient background
-        <Toaster position="top-right" /> // Render toast notifications
-        <div className="flex flex-col md:flex-row justify-between"> // Layout for topics and main content
+      <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900">
+        <Toaster position="top-right" />
+        <div className="flex flex-col md:flex-row justify-between">
           {/* Left Sidebar - Topics */}
-          <div className="w-full md:w-80 p-4 rounded-lg"> // Sidebar for topic selection
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3"> // Grid layout for topic badges
+          <div className="w-full md:w-80 p-4 rounded-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {Object.keys(quotesData).map((topic) => (
                 <Badge 
                   key={topic} 
                   variant="secondary" 
-                  className={`cursor-pointer backdrop-blur-sm text-lg font-medium p-3 justify-start block w-full text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${getTopicBadgeStyle(topic)}`} // Styled and interactive badge
-                  onClick={() => handleTopicClick(topic)} // Handle badge click
+                  className={`cursor-pointer backdrop-blur-sm text-lg font-medium p-3 justify-start block w-full text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${getTopicBadgeStyle(topic)}`}
+                  onClick={() => handleTopicClick(topic)}
                 >
-                  {topic} // Display topic name
+                  {topic}
                 </Badge>
               ))}
             </div>
           </div>
 
           {/* Main Content Area */}
-          <div className="flex-1 p-4 md:p-6"> // Main area for form and quotes
+          <div className="flex-1 p-4 md:p-6">
             {/* Center Title */}
-            <div className="text-center mb-6 md:mb-8"> // Centered title section
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-lg font-playfair pb-1"> // Gradient title with custom font
+            <div className="text-center mb-6 md:mb-8">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-lg font-playfair pb-1">
                 Feeling Thoughtful?
               </h1>
             </div>
 
             {/* Quote Generator Form */}
-            <div className="max-w-md mx-auto mb-6 md:mb-8"> // Form container
-              <Card className="shadow-2xl bg-gray-800/40 backdrop-blur-md border-2 border-cyan-500/40 hover:border-cyan-400/60 transition-all duration-300 hover:shadow-xl"> // Styled card for form
+            <div className="max-w-md mx-auto mb-6 md:mb-8">
+              <Card className="shadow-2xl bg-gray-800/40 backdrop-blur-md border-2 border-cyan-500/40 hover:border-cyan-400/60 transition-all duration-300 hover:shadow-xl">
                 <CardHeader>
-                  <CardTitle className="text-3xl text-gray-100 font-playfair"> // Form title
+                  <CardTitle className="text-3xl text-gray-100 font-playfair">
                     Generate Quotes
                   </CardTitle>
-                  <CardDescription className="text-2xl text-gray-300 font-playfair"> // Form description
+                  <CardDescription className="text-2xl text-gray-300 font-playfair">
                     What's on your mind...
                   </CardDescription>
                 </CardHeader>
 
                 <CardContent>
-                  <Form {...form}> // Form component with validation
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5"> // Form submission handler
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                       <FormField
                         control={form.control}
                         name="topic"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-2xl text-gray-100 font-playfair"> // Label for input
+                            <FormLabel className="text-2xl text-gray-100 font-playfair">
                               Topic
                             </FormLabel>
                             <FormControl>
@@ -173,10 +172,10 @@ export default function QuoteGenerator() {
                                            bg-gray-900/60 border-2 border-cyan-500/40
                                            text-gray-100 placeholder-gray-400
                                            focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20
-                                           transition-all duration-300 font-playfair" // Styled input field
+                                           transition-all duration-300 font-playfair"
                               />
                             </FormControl>
-                            <FormMessage className="text-xl text-red-400 font-playfair" /> // Validation error message
+                            <FormMessage className="text-xl text-red-400 font-playfair" />
                           </FormItem>
                         )}
                       />
@@ -188,11 +187,11 @@ export default function QuoteGenerator() {
                                    hover:from-cyan-700 hover:to-teal-700
                                    text-white border-none
                                    transition-all duration-300 transform hover:scale-105
-                                   shadow-lg hover:shadow-xl font-playfair" // Styled submit button
+                                   shadow-lg hover:shadow-xl font-playfair"
                         disabled={isLoading}
                       >
                         {isLoading ? (
-                          <div className="flex items-center justify-center"> // Loading state
+                          <div className="flex items-center justify-center">
                             <svg
                               className="animate-spin h-5 w-5 mr-3"
                               viewBox="0 0 24 24"
@@ -214,7 +213,7 @@ export default function QuoteGenerator() {
                             Generating...
                           </div>
                         ) : (
-                          'Generate Quotes' // Default button text
+                          'Generate Quotes'
                         )}
                       </Button>
                     </form>
@@ -225,45 +224,46 @@ export default function QuoteGenerator() {
 
             {/* Generated Quotes */}
             {quotes.length > 0 && (
-              <div className="max-w-4xl mx-auto space-y-6"> // Container for generated quotes
-                <Alert className="bg-gradient-to-r from-gray-800/40 to-gray-700/40 backdrop-blur-md border-2 border-cyan-500/40 shadow-lg"> // Styled alert
-                  <AlertDescription className="text-lg text-gray-200 font-playfair"> // Alert message
+              <div className="max-w-4xl mx-auto space-y-6">
+                <Alert className="bg-gradient-to-r from-gray-800/40 to-gray-700/40 backdrop-blur-md border-2 border-cyan-500/40 shadow-lg">
+                  <AlertDescription className="text-lg text-gray-200 font-playfair">
                     Found {quotes.length} motivational quotes for your topic! Click on any topic badge to try different categories.
                   </AlertDescription>
                 </Alert>
                 
-                <h2 className="text-2xl md:text-3xl font-semibold text-center bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-md font-playfair"> // Styled title for quotes
+                <h2 className="text-2xl md:text-3xl font-semibold text-center bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-md font-playfair">
                   Your Motivational Quotes
                 </h2>
                 
-                <div className="grid gap-4"> // Grid layout for quote cards
+                <div className="grid gap-4">
                   {quotes.slice(currentQuoteIndex, currentQuoteIndex + 1).map((quote, index) => (
                     <Card 
                       key={index} 
-                      className="hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-gray-800/50 to-gray-700/50 backdrop-blur-md border-2 border-cyan-500/50 hover:border-cyan-400/70 transform hover:scale-[1.02] hover:-translate-y-1" // Styled and interactive card
+                      className="hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-gray-800/50 to-gray-700/50 backdrop-blur-md border-2 border-cyan-500/50 hover:border-cyan-400/70 transform hover:scale-[1.02] hover:-translate-y-1"
                     >
-                      <CardContent className="p-4 md:p-8 flex flex-col justify-between relative overflow-hidden"> // Card content with layout
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-xl -translate-y-16 translate-x-16"></div> // Decorative gradient effect
+                      <CardContent className="p-4 md:p-8 flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-xl -translate-y-16 translate-x-16"></div>
+                        
                         <div className="relative z-10">
-                          <blockquote className="text-xl md:text-2xl italic leading-relaxed text-gray-100 mb-4 drop-shadow-sm font-playfair"> // Quote text
+                          <blockquote className="text-xl md:text-2xl italic leading-relaxed text-gray-100 mb-4 drop-shadow-sm font-playfair">
                             "{quote.split(' - ')[0]}"
                           </blockquote>
                           {quote.includes(' - ') && (
-                            <cite className="block text-base font-medium text-cyan-300 drop-shadow-sm font-playfair"> // Author citation
+                            <cite className="block text-base font-medium text-cyan-300 drop-shadow-sm font-playfair">
                               — {quote.split(' - ')[1]}
                             </cite>
                           )}
                         </div>
-                        <div className="mt-6 flex justify-end gap-3 relative z-10"> // Buttons container
+                        <div className="mt-6 flex justify-end gap-3 relative z-10">
                           <Button 
                             onClick={() => copyToClipboard(quote)} 
-                            className="text-base bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white border-none transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-playfair" // Copy button
+                            className="text-base bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white border-none transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-playfair"
                           >
                             Copy to Clipboard
                           </Button>
                           <Button 
                             onClick={handleNextQuote} 
-                            className="text-base bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-none transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-playfair" // Next quote button
+                            className="text-base bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-none transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-playfair"
                           >
                             Next Quote
                           </Button>
