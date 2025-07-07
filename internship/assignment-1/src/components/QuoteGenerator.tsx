@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import quotesData from "@/data/quotes.json"
-import Head from "next/head"
+// Removed <Head> as font is now in _document.js
 import { Toaster, toast } from "react-hot-toast"
 
 const formSchema = z.object({
@@ -74,45 +74,41 @@ export default function QuoteGenerator() {
   }
 
   const handleTopicClick = (topic: string) => {
-    form.setValue('topic', topic)
+    form.setValue("topic", topic)
     setSelectedTopic(topic)
   }
 
   const getTopicBadgeStyle = (topic: string) => {
     const isSelected = selectedTopic === topic.toLowerCase()
     const colors = {
-      'motivation': isSelected ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-amber-600/70 hover:to-orange-600/70 border-amber-500/40',
-      'success': isSelected ? 'bg-gradient-to-r from-emerald-600 to-green-600 border-emerald-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-emerald-600/70 hover:to-green-600/70 border-emerald-500/40',
-      'perseverance': isSelected ? 'bg-gradient-to-r from-blue-600 to-indigo-600 border-blue-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-blue-600/70 hover:to-indigo-600/70 border-blue-500/40',
-      'dreams': isSelected ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-purple-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-purple-600/70 hover:to-pink-600/70 border-purple-500/40',
-      'leadership': isSelected ? 'bg-gradient-to-r from-red-600 to-rose-600 border-red-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-red-600/70 hover:to-rose-600/70 border-red-500/40',
-      'confidence': isSelected ? 'bg-gradient-to-r from-yellow-600 to-amber-600 border-yellow-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-yellow-600/70 hover:to-amber-600/70 border-yellow-500/40',
-      'happiness': isSelected ? 'bg-gradient-to-r from-pink-600 to-rose-600 border-pink-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-pink-600/70 hover:to-rose-600/70 border-pink-500/40',
-      'wisdom': isSelected ? 'bg-gradient-to-r from-slate-600 to-gray-600 border-slate-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-slate-600/70 hover:to-gray-600/70 border-slate-500/40',
-      'change': isSelected ? 'bg-gradient-to-r from-teal-600 to-cyan-600 border-teal-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-teal-600/70 hover:to-cyan-600/70 border-teal-500/40',
-      'failure': isSelected ? 'bg-gradient-to-r from-orange-600 to-red-600 border-orange-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-orange-600/70 hover:to-red-600/70 border-orange-500/40',
-      'growth': isSelected ? 'bg-gradient-to-r from-lime-600 to-green-600 border-lime-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-lime-600/70 hover:to-green-600/70 border-lime-500/40',
-      'creativity': isSelected ? 'bg-gradient-to-r from-violet-600 to-purple-600 border-violet-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-violet-600/70 hover:to-purple-600/70 border-violet-500/40',
-      'love': isSelected ? 'bg-gradient-to-r from-rose-600 to-pink-600 border-rose-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-rose-600/70 hover:to-pink-600/70 border-rose-500/40',
-      'romance': isSelected ? 'bg-gradient-to-r from-pink-600 to-rose-600 border-pink-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-pink-600/70 hover:to-rose-600/70 border-pink-500/40',
-      'health': isSelected ? 'bg-gradient-to-r from-green-600 to-emerald-600 border-green-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-green-600/70 hover:to-emerald-600/70 border-green-500/40',
-      'parents': isSelected ? 'bg-gradient-to-r from-indigo-600 to-blue-600 border-indigo-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-indigo-600/70 hover:to-blue-600/70 border-indigo-500/40',
-      'education': isSelected ? 'bg-gradient-to-r from-blue-600 to-cyan-600 border-blue-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-blue-600/70 hover:to-cyan-600/70 border-blue-500/40',
-      'adulthood': isSelected ? 'bg-gradient-to-r from-gray-600 to-slate-600 border-gray-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-gray-600/70 hover:to-slate-600/70 border-gray-500/40',
-      'heartbreak': isSelected ? 'bg-gradient-to-r from-red-600 to-pink-600 border-red-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-red-600/70 hover:to-pink-600/70 border-red-500/40',
-      'death': isSelected ? 'bg-gradient-to-r from-gray-700 to-slate-700 border-gray-500' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-gray-700/70 hover:to-slate-700/70 border-gray-600/40',
-      'poverty': isSelected ? 'bg-gradient-to-r from-amber-700 to-orange-700 border-amber-500' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-amber-700/70 hover:to-orange-700/70 border-amber-600/40',
-      'childhood': isSelected ? 'bg-gradient-to-r from-sky-600 to-blue-600 border-sky-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-sky-600/70 hover:to-blue-600/70 border-sky-500/40',
+      "motivation": isSelected ? "bg-gradient-to-r from-amber-600 to-orange-600 border-amber-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-amber-600/70 hover:to-orange-600/70 border-amber-500/40",
+      "success": isSelected ? "bg-gradient-to-r from-emerald-600 to-green-600 border-emerald-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-emerald-600/70 hover:to-green-600/70 border-emerald-500/40",
+      "perseverance": isSelected ? "bg-gradient-to-r from-blue-600 to-indigo-600 border-blue-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-blue-600/70 hover:to-indigo-600/70 border-blue-500/40",
+      "dreams": isSelected ? "bg-gradient-to-r from-purple-600 to-pink-600 border-purple-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-purple-600/70 hover:to-pink-600/70 border-purple-500/40",
+      "leadership": isSelected ? "bg-gradient-to-r from-red-600 to-rose-600 border-red-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-red-600/70 hover:to-rose-600/70 border-red-500/40",
+      "confidence": isSelected ? "bg-gradient-to-r from-yellow-600 to-amber-600 border-yellow-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-yellow-600/70 hover:to-amber-600/70 border-yellow-500/40",
+      "happiness": isSelected ? "bg-gradient-to-r from-pink-600 to-rose-600 border-pink-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-pink-600/70 hover:to-rose-600/70 border-pink-500/40",
+      "wisdom": isSelected ? "bg-gradient-to-r from-slate-600 to-gray-600 border-slate-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-slate-600/70 hover:to-gray-600/70 border-slate-500/40",
+      "change": isSelected ? "bg-gradient-to-r from-teal-600 to-cyan-600 border-teal-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-teal-600/70 hover:to-cyan-600/70 border-teal-500/40",
+      "failure": isSelected ? "bg-gradient-to-r from-orange-600 to-red-600 border-orange-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-orange-600/70 hover:to-red-600/70 border-orange-500/40",
+      "growth": isSelected ? "bg-gradient-to-r from-lime-600 to-green-600 border-lime-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-lime-600/70 hover:to-green-600/70 border-lime-500/40",
+      "creativity": isSelected ? "bg-gradient-to-r from-violet-600 to-purple-600 border-violet-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-violet-600/70 hover:to-purple-600/70 border-violet-500/40",
+      "love": isSelected ? "bg-gradient-to-r from-rose-600 to-pink-600 border-rose-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-rose-600/70 hover:to-pink-600/70 border-rose-500/40",
+      "romance": isSelected ? "bg-gradient-to-r from-pink-600 to-rose-600 border-pink-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-pink-600/70 hover:to-rose-600/70 border-pink-500/40",
+      "health": isSelected ? "bg-gradient-to-r from-green-600 to-emerald-600 border-green-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-green-600/70 hover:to-emerald-600/70 border-green-500/40",
+      "parents": isSelected ? "bg-gradient-to-r from-indigo-600 to-blue-600 border-indigo-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-indigo-600/70 hover:to-blue-600/70 border-indigo-500/40",
+      "education": isSelected ? "bg-gradient-to-r from-blue-600 to-cyan-600 border-blue-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-blue-600/70 hover:to-cyan-600/70 border-blue-500/40",
+      "adulthood": isSelected ? "bg-gradient-to-r from-gray-600 to-slate-600 border-gray-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-gray-600/70 hover:to-slate-600/70 border-gray-500/40",
+      "heartbreak": isSelected ? "bg-gradient-to-r from-red-600 to-pink-600 border-red-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-red-600/70 hover:to-pink-600/70 border-red-500/40",
+      "death": isSelected ? "bg-gradient-to-r from-gray-700 to-slate-700 border-gray-500" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-gray-700/70 hover:to-slate-700/70 border-gray-600/40",
+      "poverty": isSelected ? "bg-gradient-to-r from-amber-700 to-orange-700 border-amber-500" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-amber-700/70 hover:to-orange-700/70 border-amber-600/40",
+      "childhood": isSelected ? "bg-gradient-to-r from-sky-600 to-blue-600 border-sky-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-sky-600/70 hover:to-blue-600/70 border-sky-500/40",
     }
-    return colors[topic as keyof typeof colors] || (isSelected ? 'bg-gradient-to-r from-cyan-600 to-teal-600 border-cyan-400' : 'bg-gray-800/60 hover:bg-gradient-to-r hover:from-cyan-600/70 hover:to-teal-600/70 border-cyan-500/40')
+    return colors[topic as keyof typeof colors] || (isSelected ? "bg-gradient-to-r from-cyan-600 to-teal-600 border-cyan-400" : "bg-gray-800/60 hover:bg-gradient-to-r hover:from-cyan-600/70 hover:to-teal-600/70 border-cyan-500/40")
   }
 
   return (
     <>
-      <Head>
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-      </Head>
-      
       <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900">
         <Toaster position="top-right" />
         <div className="flex flex-col md:flex-row justify-between">
@@ -149,7 +145,7 @@ export default function QuoteGenerator() {
                     Generate Quotes
                   </CardTitle>
                   <CardDescription className="text-2xl text-gray-300 font-playfair">
-                    What's on your mind...
+                    What is on your mind...
                   </CardDescription>
                 </CardHeader>
 
@@ -246,7 +242,7 @@ export default function QuoteGenerator() {
                         
                         <div className="relative z-10">
                           <blockquote className="text-xl md:text-2xl italic leading-relaxed text-gray-100 mb-4 drop-shadow-sm font-playfair">
-                            "{quote.split(' - ')[0]}"
+                           {quote.split(' - ')[0]}
                           </blockquote>
                           {quote.includes(' - ') && (
                             <cite className="block text-base font-medium text-cyan-300 drop-shadow-sm font-playfair">
