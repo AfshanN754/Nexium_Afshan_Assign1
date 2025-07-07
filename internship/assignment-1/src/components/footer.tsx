@@ -1,13 +1,7 @@
-import React from 'react';
-
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
-      <aside>
-        <p>Copyright © {new Date().getFullYear()} - Quote Generator</p>
-      </aside>
+    <footer className="text-center py-4 text-[#5C4033] bg-[#FFFFFF] h-16">
+      Copyright © 2025 - Quote Generator
     </footer>
   );
-};
-
-export default Footer;
+}
